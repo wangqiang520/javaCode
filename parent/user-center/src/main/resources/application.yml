@@ -1,0 +1,27 @@
+server:
+   port: 8081
+spring:
+   application:
+      name: user-center
+
+   datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/user-center?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: cr999
+      password: root
+      type: com.alibaba.druid.pool.DruidDataSource  # 当前数据源操作类型
+      dbcp2:
+         min-idle: 5 #数据库连接池当前最小连接数
+         initial-size: 5  #初始化连接数
+         max-total: 5  #最大连接数
+         max-wait-millis: 200   #等待连接获取的最大超时时间
+
+mybatis-plus:
+   #mapper文件配置
+   mapper-locations: classpath*:mapper/*.xml
+   #别名所在包
+   type-aliases-package: com.cr999.cn.entity
+   configuration:
+      #驼峰法
+      map-underscore-to-camel-case: true
+      cache-enable: false
