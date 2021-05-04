@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.userService.cn.dao.UserDao">
+	<resultMap type="com.userService.cn.po.UserPo"
+		id="resultMap">
+		<result column="id" property="id" />
+		<result column="user_name" property="userName" />
+		<result column="user_login" property="userLogin" />
+		<result column="pass_word" property="passWord" />
+		<result column="sex" property="sex" />
+		<result column="idcard_type" property="idCardTpye" jdbcType="TINYINT" javaType="byte" />
+		<result column="idcard" property="idCard" />
+		<result column="email" property="email" />
+		<result column="address" property="address" />
+		<result column="telephone" property="telephone" />
+	    <result column="creater" property="creater" /> 
+		<result column="create_time" property="createTime" />
+		<result column="updater" property="updater" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<sql id="field">
+		id,user_name,user_login,pass_word,sex,idcard_type,idcard,email,address,telephone,creater,create_time,updater,update_time
+	</sql>
+
+	<select id="findById" parameterType="java.lang.Integer" resultMap="resultMap">
+		select
+		<include refid="field" />
+		from t_user
+		where
+		id=#{id}
+	</select>
+	
+	<select id="queryList" parameterType="java.util.HashMap" resultMap="resultMap">
+		select
+		<include refid="field" />
+		from t_user
+		<where>
+			<if test="id != null">
+				and id=#{id}
+			</if>
+			<if test="userName != null">
+				and user_name=#{userName}
+			</if>
+			<if test="userLogin != null">
+				and user_login=#{userLogin}
+			</if>
+			<if test="passWord != null">
+				and pass_word=#{passWord}
+			</if>
+			<if test="sex != null">
+				and sex=#{sex}
+			</if>
+			<if test="idCardTpye != null">
+				and idcard_type=#{idCardTpye}
+			</if>
+			<if test="idCard != null">
+				and idcard=#{idCard}
+			</if>
+			<if test="email != null">
+				and email=#{email}
+			</if>
+			<if test="address != null">
+				and address=#{address}
+			</if>
+			<if test="telephone != null">
+				and telephone=#{telephone}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insert" parameterType="com.userService.cn.po.UserPo">
+		insert into t_user(user_name,user_login,pass_word,sex,idcard_type,idcard,email,address,telephone,create_time,update_time)values(#{userName},#{userLogin},#{passWord},#{sex},#{idCardTpye},#{idCard},#{email},#{address},#{telephone},#{createTime},#{updateTime})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from t_user where id=#{id}
+	</delete>
+	
+	<update id="update" parameterType="java.util.HashMap">
+		update t_user
+		<set>
+			<if test="userName != null">
+				user_name=#{userName},
+			</if>
+			<if test="userLogin != null">
+				user_login=#{userLogin},
+			</if>
+			<if test="passWord != null">
+				pass_word=#{passWord},
+			</if>
+			
+			<if test="sex != null">
+				sex=#{sex},
+			</if>
+			<if test="idCardTpye != null">
+				idcard_type=#{idCardTpye},
+			</if>
+			
+			<if test="idCard != null">
+				idcard=#{idCard},
+			</if>
+			<if test="email != null">
+				email=#{email},
+			</if>
+			
+			<if test="address != null">
+				address=#{address},
+			</if>
+			<if test="telephone != null">
+				telephone=#{telephone},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<select id="findByUserLoginAndPassWord" parameterType="com.userService.cn.po.UserPo" resultMap="resultMap">
+		select
+		<include refid="field" />
+		from t_user
+		<where>
+			<if test="userLogin != null">
+				and user_login=#{userLogin}
+			</if>
+			<if test="passWord != null">
+				and pass_word=#{passWord}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

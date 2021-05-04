@@ -1,0 +1,24 @@
+package com.userService.cn.util;
+
+public class ResultUtil {
+	//成功带数据
+	public static Result success(Object object) {
+		Result result=new Result();
+		result.setCode(ResultEnum.SUCCESS.getCode());
+		result.setMsg(ResultEnum.SUCCESS.getMsg());
+		result.setData(object);
+		return result;
+	}
+	
+	//成功不带数据
+	public static Result success() {
+		return success(null);
+	}
+	//失败
+	public static Result error(Integer code,String msg) {
+		Result result=new Result();
+		result.setCode(code);
+		result.setMsg(msg);
+		return result;
+	}
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script> 
+<body>
+
+<div>
+			<form method="post" action="https://127.0.0.1:8082/userService/user/login">
+				用户名：<input type="text" name="loginName" id="loginName" value="wangqiang" placeholder="用户名不能为空" />
+				<p/>
+				密&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="passWord" id="passWord" value="123456" placeholder="密码不能为空">
+				<p/>
+				<input type="submit" value="登录" />
+			</form>
+			<button onclick="login()">登录按钮</button>
+			<textarea id="textarea"></textarea>
+			
+		</div>
+</body>
+<script type="text/javascript">
+function login(){
+	var loginName=$("#loginName").val();
+	var passWord=$("#passWord").val();
+	var data={};
+	data.loginName=loginName;
+	data.passWord=passWord;
+	var url="https://127.0.0.1:8082/userService/user/login";
+	ajax("post",url,true,data,"json");
+	
+}
+function getQueryString(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = location.search.substr(1).match(reg);
+    if (r != null) {
+        return unescape(r[2]);
+    }
+    return null;
+}
+function ajax(type,url,async,data,dataType){
+	$.ajax({
+		type: type, //请求类型
+		url: url, //请求地址
+		async: async,
+		data: data, //请求参数
+		dataType: dataType, //请求参数类型
+		success: function(res){
+			var urls=getQueryString("redirectURL");
+			location.href = urls+"?token="+res.data.token;
+		},
+		error: function(err){
+			alert("err:"+JSON.stringify(err));
+		}
+	});
+}
+</script>
+</html>
